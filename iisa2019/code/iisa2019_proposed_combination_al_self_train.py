@@ -37,7 +37,7 @@ warnings.filterwarnings("ignore")
 
 def download_dataset(dataset):
     
-    os.chdir("provide path")
+    os.chdir("..") #provide path
     if dataset == 1:
         data = pd.read_csv('voice_numeric.csv')
         data.columns.values[-1] = 'Class'
@@ -64,6 +64,7 @@ def split(train_size):
     y_train_full = y[:train_size]
     X_test = X[train_size:]
     y_test = y[train_size:]
+    
     return (X_train_full, y_train_full, X_test, y_test)
 
 def split_alssl(X, y, repeats, testsize):
@@ -78,6 +79,7 @@ def split_alssl(X, y, repeats, testsize):
         y_tr.append(y_train)
         x_ts.append(X_test)
         y_ts.append(y_test)
+        
     return x_tr, y_tr, x_ts, y_ts 
 
 class BaseModel(object):
@@ -87,7 +89,6 @@ class BaseModel(object):
 
     def fit_predict(self):
         pass
-
 
 class RfModel(BaseModel):
 
@@ -179,7 +180,6 @@ class TrainModel:
         self.recall.append(np.round(rec*100,3))
         self.fscore.append(np.round(f1*100,3))               
 
-        
 class BaseSelectionFunction(object):
 
     def __init__(self):
@@ -188,7 +188,7 @@ class BaseSelectionFunction(object):
     def select(self):
         pass
 
-
+        
 class RandomSelection(BaseSelectionFunction):
 
     @staticmethod
@@ -266,8 +266,7 @@ def get_k_random_samples(initial_labeled_samples, X_train_full,
     X_train = X_train_full.iloc[permutation].values
     y_train = y_train_full.iloc[permutation].values
     X_train = X_train.reshape((X_train.shape[0], -1))
-    bin_count = np.bincount(y_train.astype('int64'))
-    unique = np.unique(y_train.astype('int64'))
+    
     return (permutation, X_train, y_train)
 
 
@@ -282,8 +281,7 @@ def get_k_random_samples_stratified(initial_labeled_samples, X_train_full, y_tra
     X_train = X_train_full.iloc[permutation].values
     y_train = y_train_full.iloc[permutation].values
     X_train = X_train.reshape((X_train.shape[0], -1))
-    bin_count = np.bincount(y_train.astype('int64'))
-    unique = np.unique(y_train.astype('int64'))
+    
     return (permutation, X_train, y_train)
 
 class TheAlgorithm(object):
@@ -298,7 +296,6 @@ class TheAlgorithm(object):
         self.L0 = L0
         self.sample_selection_function_ssl = selection_function_ssl
         self.ssl_ratio = ssl_ratio
-        #self.repeats = repeats
         self.permutation = permutation
         self.X_train = X_train
         self.y_train = y_train
@@ -341,9 +338,6 @@ class TheAlgorithm(object):
             y_train = np.concatenate((y_train, y_val[uncertain_samples]))
             self.samplecount.append(X_train.shape[0])
 
-            bin_count = np.bincount(y_train.astype('int64'))
-            unique = np.unique(y_train.astype('int64'))
-            
 
             X_val = np.delete(X_val, uncertain_samples, axis=0)
             y_val = np.delete(y_val, uncertain_samples, axis=0)
@@ -365,8 +359,6 @@ class TheAlgorithm(object):
             y_train = np.concatenate((y_train, y_val[uncertain_samples_ssl]))
             self.samplecount.append(X_train.shape[0])
 
-            bin_count = np.bincount(y_train.astype('int64'))
-            unique = np.unique(y_train.astype('int64'))
 
             X_val = np.delete(X_val, uncertain_samples_ssl, axis=0)
             y_val = np.delete(y_val, uncertain_samples_ssl, axis=0)
