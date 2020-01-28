@@ -14,7 +14,6 @@ This paper tackles with the concept of applying Active Learning concept exploiti
 
 Conference site: [link](http://www.aiai2019.eu/)
 
-More information are going to be mentioned after the presentation of this work.
 ### IISA 2019
 iisa folder is related with the corresponding publication submitted in **IISA2019** with title:
 
@@ -23,3 +22,7 @@ iisa folder is related with the corresponding publication submitted in **IISA201
 This paper is oriented towards the combination of Uncertainty Sampling Query Strategy with Self-training scheme under a common framework, so as to obtain improved learning behavior against supervised mode, exploiting useful information from available data without relying heavily on the human oracle, through which trustworthy decisions are drawn for the most ambiguous unlabeled instances.
 
 Conference site: [link](http://iisa2019.upatras.gr/)
+
+
+More information are going to be mentioned after the presentations of these works on our academic site:
+http://ml.math.upatras.gr/
